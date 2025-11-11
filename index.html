@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie name</title>
+    <style>
+        body{
+            padding: 0px;
+            margin: 0px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: bisque;
+        }
+        .container{
+            background-color:blanchedalmond;
+            border: 1px solid black;
+            border-radius: 20px;
+            width: 350px;
+            margin-top: 100px;
+            padding-left: 60px;
+            padding-top: 30px;
+            box-shadow: 8px 8px 15px rgba(0,0,0,0.4);
+            transition: 0.3s ease;
+         }
+         .container:hover{
+            transform: translatey(-5px);
+            box-shadow: 12px 12px 20px  rgba(0, 150, 255, 0.7);;
+            
+         }
+         h1{
+            border: 0.5px solid black;
+            display: inline;
+            padding: 1px;
+            padding-left: 10px;
+            padding-right: 10px;
+            border-radius: 3px;
+            width: 20px;
+            background-color: aliceblue;
+        
+         }
+         .input{
+            margin-top: 20px;
+            margin-right: 50px;
+            display: flex;
+            gap: 5px;
+         }
+         #totalmovies{
+            text-transform:uppercase;
+         }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1><i><b>Movies Name List</b></i></h1>
+        <div class="input">
+
+            <input type="text" id="movieinput" placeholder="enter movie name"><br><br>
+            <button id="addbtn">Add movie</button>
+            <br><br>
+            <button id="clearbtn">Clear movie</button>
+        </div>
+        <ul id="movielist">
+            
+        </ul>
+        <p id="totalmovies"> <b> total movies : </b></p>
+    </div>
+    <script>
+        //get reference of html element
+        const input=document.getElementById("movieinput");
+        const addbtn=document.getElementById("addbtn");
+        const clrbtn=document.getElementById("clearbtn");
+        const movielist=document.getElementById("movielist");
+        const totalmovies=document.getElementById("totalmovies");
+        //creating an array
+        let movies=[];
+        //function to update the movie list display
+        function updatelist(){
+            movielist.innerHTML="";
+            movies.forEach((movie,index)=>{
+                    const li=document.createElement("li");
+                    li.textContent=movie;
+                    //remove a movie when clicked
+                    li.addEventListener("click",() =>{
+                        movies.splice(index,1);
+                        updatelist();
+                    });
+                    movielist.appendChild(li);
+            });
+            totalmovies.textContent="Total movies : "+movies.length;
+        }
+        addbtn.addEventListener("click", () => {
+        const name = input.value.trim(); 
+
+        if (name === "") {
+            alert("Please enter a movie name!");
+            return;
+        }
+
+        movies.push(name);   
+        input.value = "";    
+        updatelist();        
+    });
+
+    // Clear list button click
+    clearbtn.addEventListener("click", () => {
+        movies = [];         // empty array
+        updatelist();        // clear display
+    });
+    </script>
+</body>
+
+</html>
